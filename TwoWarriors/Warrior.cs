@@ -10,8 +10,8 @@ namespace TwoWarriors
 		public int MaxDamage { get; set; } = 0;
 		public int MaxArmor { get; set; } = 0;
 		public int CurrentHealth { get; set; } = 0;
-		private Random _rd;
-
+		private Random _rd1;
+		private Random _rd2;
 		public Warrior() : this("N/A", 0, 0, 0) { }
 
 		public Warrior(string name, int maxHealth, int maxDamage, int maxArmor) {
@@ -20,7 +20,8 @@ namespace TwoWarriors
 			MaxDamage = maxDamage;
 			MaxArmor = maxArmor;
 			CurrentHealth = maxHealth;
-			_rd = new Random();
+			_rd1 = new Random(maxHealth + maxDamage * maxArmor - DateTime.Now.Millisecond);
+			_rd2 = new Random(maxHealth - maxDamage * maxArmor + DateTime.Now.Millisecond);
 		}
 
 		public string Name {
@@ -34,8 +35,8 @@ namespace TwoWarriors
 			}
 		}
 
-		public int Attack() => _rd.Next(0, MaxDamage + 1);
+		public int Attack() => _rd1.Next(0, MaxDamage + 1);
 
-		public int Block() => _rd.Next(0, MaxArmor + 1);
+		public int Block() => _rd2.Next(0, MaxArmor + 1);
 	}
 }

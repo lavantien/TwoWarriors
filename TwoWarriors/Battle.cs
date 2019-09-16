@@ -36,9 +36,12 @@ namespace TwoWarriors
 			}
 			int attack = w1.Attack();
 			int block = w2.Block();
-			w2.CurrentHealth -= attack - block;
-			Console.WriteLine($"* Match {counter}: {w1.Name} has attacked {w2.Name} for {attack} damage." +
-				$"\n\t{w2.Name} has absorbed {block} damage --> {w2.CurrentHealth} HP remaining.\n");
+			int hpLost = attack - block > 0 ? attack - block : 0;
+			int oldCurrHp = w2.CurrentHealth;
+			w2.CurrentHealth -= hpLost;
+			Console.WriteLine($"* Match {counter}:\n\t{w1.Name} has attacked {w2.Name} for {attack} damage." +
+				$"\n\t{w2.Name} has absorbed {block} damage." +
+				$"\n\t--> Has {oldCurrHp} HP. {hpLost} HP lost. {w2.CurrentHealth} HP remaining.\n");
 			isVictory = false;
 			++counter;
 		}
